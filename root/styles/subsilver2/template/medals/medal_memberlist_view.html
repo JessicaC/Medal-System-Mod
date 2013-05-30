@@ -1,0 +1,57 @@
+	<!-- BEGIN switch_display_medal -->
+	<br clear="all" />
+
+	<script language="JavaScript" type="text/javascript" src="{T_SUPER_TEMPLATE_PATH}/medals/toggle_display.js"></script>
+	<table class="tablebg" width="100%" cellspacing="1" cellpadding="3" border="0">
+	<tr>
+		<th align="center" colspan="2">{L_MEDAL_INFORMATION}</th>
+	</tr>
+	<tr class="row1">
+		<td class="gen" align="center" valign="center" width="20%">
+			{L_MEDALS_VIEW}:&nbsp;<b class="genmed">{USER_MEDAL_COUNT}</b><br />
+			<!-- BEGIN medal -->
+			{switch_display_medal.medal.MEDAL_BUTTON}
+			<!-- END medal -->
+		</td>
+		<td class="gen" valign="center">
+			<!-- BEGIN details -->
+			&nbsp;{switch_display_medal.details.MEDAL_IMAGE_SMALL}&nbsp;
+			<!-- END details -->
+		</td>
+	</tr>
+	</table>
+
+
+	<div  style="width: 100%; overflow: hidden; display: none;" id="toggle_medal">
+	<table class="tablebg" width="100%" cellspacing="1" cellpadding="3" border="0">
+	<tr class="row1">
+		<td class="cat" align="center" nowrap="nowrap"><h4>{L_MEDAL}</h4></th>
+		<td class="cat" align="center" nowrap="nowrap"><h4>{L_MEDAL_DETAIL}</h4></th>
+	</tr>
+	<!-- BEGIN details -->
+		<tr <!-- IF switch_display_medal.details.S_ROW_COUNT is even -->class="row1"<!-- ELSE -->class="row2"<!-- ENDIF -->>
+			<td class="gen" nowrap="nowrap" width="20%">
+				<table width="100%" cellspacing="1" cellpadding="3" border="0">
+					<!-- IF switch_display_medal.details.ISMEDAL_CAT  -->
+					<tr><td align="center"><h4>{switch_display_medal.details.MEDAL_CAT}</h4></td></tr>
+					<!-- ENDIF  -->
+					<tr><td align="center">{switch_display_medal.details.MEDAL_NAME}</td></tr>
+					<tr><td align="center">{switch_display_medal.details.MEDAL_IMAGE}</td></tr>
+					<tr><td align="center">{switch_display_medal.details.MEDAL_COUNT}</td></tr>
+				</table>
+			</td>
+			<td class="gen" valign="top">
+				<table width="100%" cellspacing="1" cellpadding="3" border="0">
+					<tr><td><h4>{L_MEDAL_DESCRIPTION}: <b>{switch_display_medal.details.MEDAL_DESCRIPTION}</b></h4></td></tr>
+					<tr><td>
+						<table width="100%" cellspacing="1" cellpadding="3" border="0">
+							<tr><td>{switch_display_medal.details.MEDAL_ISSUE}</td></tr>
+						</table>
+					</td></tr>
+				</table>
+			</td>
+		</tr>
+	<!-- END details -->
+	</table>
+	</div>
+	<!-- END switch_display_medal -->

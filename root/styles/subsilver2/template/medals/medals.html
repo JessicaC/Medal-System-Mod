@@ -1,0 +1,142 @@
+<!-- INCLUDE overall_header.html -->
+
+<p>
+
+<!-- IF S_MEDAL_VIEW -->
+		<table class="tablebg" width="100%" cellspacing="1">
+			<thead>
+				<tr>
+					<th align="center" width="150">{L_MEDALS_VIEW}</th>
+					<th align="center">{L_MEDAL_DESC}</th>
+					<th align="center" width="280">{L_MEDAL_AWARDED}</th>
+					<!-- IF S_CAN_AWARD_MEDALS --><th align="center" width="100">{L_MEDAL_MOD}</th><!-- ENDIF -->
+				</tr>
+			</thead>
+			<tbody>
+				<!-- BEGIN medalrow -->
+				<!-- IF medalrow.IS_CAT -->
+				<tr class="cat">
+					<td colspan="<!-- IF S_CAN_AWARD_MEDALS -->4<!-- ELSE -->3<!-- ENDIF -->"><h4>{medalrow.MEDAL_CAT}</h4></td>
+				</tr>
+				<!-- ELSE -->
+				<tr class="row1">
+					<td align="center">{medalrow.MEDAL_NAME}<br />{medalrow.MEDAL_IMG}</td>
+					<td>{medalrow.MEDAL_DESC}</td>
+					<td align="center">{medalrow.MEDAL_AWARDED}</td>
+					<!-- IF S_CAN_AWARD_MEDALS --><td align="center"><a href="{medalrow.U_MEDAL_AWARD_PANEL}">{L_MEDAL_AWARD_PANEL}</a><!-- IF medalrow.NOMINATIONS --><hr /><a href="{medalrow.U_MEDAL_NCP}">{L_NOMINATE_MEDAL}</a><!-- ENDIF --></td><!-- ENDIF -->
+				</tr>
+				<!-- ENDIF -->
+				<!-- END medalrow -->
+				<!-- IF NO_MEDAL -->
+				<tr class="cat">
+					<td colspan="<!-- IF S_CAN_AWARD_MEDALS -->4<!-- ELSE -->3<!-- ENDIF -->">{L_NO_MEDALS}</td>
+				</tr>
+				<!-- ENDIF -->
+			</tbody>
+		</table>
+<!-- ENDIF -->
+<!-- IF (S_MEDAL_NOM or S_MEDAL_AWARD) and S_CAN_AWARD_MEDALS -->
+		<table class="tablebg" width="100%" cellpadding="1">
+			<thead>
+				<tr>
+					<th align="center" colspan=2>{L_MEDAL_INFO}</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr>
+					<td class="row1" width="300"><b>{L_MEDAL_NAME}</b></td>
+					<td class="row2">{MEDAL_NAME}</td>
+				</tr>
+				<tr>
+					<td class="row1" width="300"><b>{L_MEDAL_DESC}</b></td>
+					<td class="row2">{MEDAL_DESC}</td>
+				</tr>
+				<tr>
+					<td class="row1" width="300"><b>{L_MEDAL_IMG}</b></td>
+					<td class="row2">{MEDAL_IMG}</td>
+				</tr>
+				<!-- IF S_MEDAL_AWARD -->
+				<tr>
+					<td class="row1" width="300"><b>{L_MEDAL_AWARDED}</b>{L_MEDAL_AWARDED_EXPLAIN}</td>
+					<td class="row2">{MEDAL_AWARDED}</td>
+				</tr>
+				<!-- ENDIF -->
+			</tbody>
+		</table>
+<!-- ENDIF -->
+<!-- IF S_MEDAL_AWARD and S_CAN_AWARD_MEDALS -->
+		<br clear="all" />
+		<form method="post" action="{U_MEDALS_ACTION}" name="post">
+		<table width="100%" class="tablebg" id="medal_add" cellpadding="1">
+			<thead>
+				<tr>
+					<th align="center" colspan=2>{L_AWARD_MEDAL}</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr>
+					<td class="row1" width="50%"><b>{L_USERNAME}:</b>{L_MEDAL_AWARD_USER_EXPLAIN}</td>
+					<td class="row2">
+						<textarea name="add" id="add" rows="3" cols="50" wrap="physical" tabindex="1" class="inputbox">{USERNAMES}</textarea>
+						<br />
+						<strong><a href="{U_FIND_USERNAME}" onclick="find_username(this.href); return false;">{L_FIND_USERNAME}</a></strong>
+					</td>
+				</tr>
+				<tr>
+					<td class="row1" width="50%"><b>{L_MEDAL_AWARD_REASON}:</b>{L_MEDAL_AWARD_REASON_EXPLAIN}</td>
+					<td class="row2">
+						<textarea id="message" name="message" rows="5" cols="50" wrap="physical" tabindex="1" title="reason" class="inputbox"></textarea>
+					</td>
+				</tr>
+				<tr>
+					<td class="cat" align="center" colspan=2>
+						<input class="btnmain" type="submit" accesskey="s" tabindex="1" name="submit" value="{L_SUBMIT}" class="button2" />&nbsp;
+					</td>
+				</tr>
+			</tbody>
+		</table>
+		</form>
+<!-- ENDIF -->
+<!-- IF S_MEDAL_NOM and S_CAN_AWARD_MEDALS -->
+		<br clear="all" />
+		<table width="100%" class="tablebg" id="medal_add" cellpadding="1">
+			<thead>
+				<tr>
+					<th align="center" colspan=3>{L_NOMINATED_TITLE}</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr class="row2">
+					<td colspan="3">{NOMINATED_USERS}</td>
+				</tr>
+				<!-- BEGIN nominatedrow -->
+				<tr class="row1">
+					<td width="220">{nominatedrow.NOMINATED} {nominatedrow.COUNT}</td>
+					<td>{nominatedrow.REASON}</td>
+					<td width="80" align="center">
+						<a title="{L_APPROVE}" href="{nominatedrow.U_MCP}"><span>{L_APPROVE}</span></a>
+						<hr />
+						<a title="{L_DELETE}" href="{nominatedrow.U_USER_DELETE}"><span>{L_DELETE}</span></a>
+					</td>
+				</tr>
+				<!-- END nominatedrow -->
+				<!-- IF S_DELETE_ALL -->
+				<tr>
+					<td class="cat" align="center" colspan=3>
+						<form method="post" action="{U_MEDALS_ACTION}" name="post">
+						<input class="btnmain" type="submit" accesskey="s" tabindex="1" name="submit" value="{L_DELETE_ALL}" class="button2" />						</form>
+					</td>
+				</tr>
+				<!-- ENDIF -->
+			</tbody>
+		</table>
+<!-- ENDIF -->
+
+	<br clear="all" />
+	
+	<!-- INCLUDE breadcrumbs.html -->
+	
+	<br clear="all" />
+	
+	<div align="{S_CONTENT_FLOW_END}"><!-- INCLUDE jumpbox.html --></div>	
+	<!-- INCLUDE overall_footer.html -->

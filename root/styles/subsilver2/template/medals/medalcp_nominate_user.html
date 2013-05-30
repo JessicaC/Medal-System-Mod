@@ -1,0 +1,72 @@
+<!-- INCLUDE overall_header.html -->
+
+<table width="100%" cellspacing="0" cellpadding="0" border="0">
+<tr>
+	<td width="20%" valign="top">
+		<table class="tablebg" width="100%" cellspacing="1">
+		<tr>
+			<th align="center" width="200">{L_MEDAL_CP}</th>
+		</tr>
+		<!-- IF S_CAN_NOMINATE_MEDALS -->
+		<tr>
+			<td class="row2" nowrap="nowrap" onmouseover="this.className='row1'" onmouseout="this.className='row2'" onclick="location.href=this.firstChild.href; "><a class="nav" href="{U_NOMINATE_PANEL}">{L_NOMINATE}</a></td>
+		</tr>
+		<!-- ENDIF -->
+		<!-- IF S_CAN_AWARD_MEDALS -->
+		<tr>
+			<td class="row2" nowrap="nowrap" onmouseover="this.className='row1'" onmouseout="this.className='row2'" onclick="location.href=this.firstChild.href; "><a class="nav" href="{U_AWARD_PANEL}">{L_AWARD_MEDAL}</a></td>
+		</tr>
+		<tr>
+			<td class="row1" nowrap="nowrap"><b class="nav">{L_NOMINATE_MEDAL}</b></td>
+		</tr>
+		<tr>
+			<td class="row2" nowrap="nowrap" onmouseover="this.className='row1'" onmouseout="this.className='row2'" onclick="location.href=this.firstChild.href; "><a class="nav" href="{U_AWARDED_PANEL}">{L_AWARDED_MEDAL}</a></td>
+		</tr>
+		<!-- ENDIF -->
+		</table>
+	</td>
+	<td><img src="images/spacer.gif" width="4" alt="" /></td>
+	<td width="80%" valign="top">
+		<form method="post" action="{U_MEDALS_ACTION}" name="post">
+		<table class="tablebg" width="100%" cellspacing="1">
+		<tr>
+			<th colspan="4" valign="middle">{NOMINATE_MEDAL}</th>
+		</tr>
+		<tr class="cat">
+			<td align="center"><h4>{L_DELETE}</h4></td>
+			<td align="center"><h4>{L_APPROVE}</h4></td>
+			<td align="center"><h4>{L_MEDAL_EDIT}</h4></td>
+			<td align="center"><h4>{L_MESSAGE}</h4></td>
+		</tr>
+		<!-- BEGIN nominations -->
+		<tr class="<!-- IF nominations.S_ROW_COUNT is even -->row2<!-- ELSE -->row1<!-- ENDIF -->">
+			<td width="15" valign="middle" class="gensmall" align="center">
+				<a href="{nominations.U_DELETE}"><img src="./styles/subsilver2/imageset/en/icon_post_delete.gif" alt="{L_DELETE}" title="{L_DELETE}" /></a> </td>
+			</td>
+			<td width="15" valign="middle" class="gensmall" align="center">
+				<a href="{nominations.U_APPROVE}"><img src="./styles/subsilver2/imageset/en/icon_post_approve.gif" alt="{L_APPROVE}" title="{L_APPROVE}" /></a> </td>
+			</td>
+			<td width="15" valign="middle" class="gensmall" align="center">
+				<a href="{nominations.U_MEDAL_EDIT}"><img src="./styles/subsilver2/imageset/en/icon_post_info.gif" alt="{L_MEDAL_EDIT}" title="{L_MEDAL_EDIT}" /></a> </td>
+			</td>
+			<td class="genmed"><div class="content"><span>{nominations.REASON}</span></div></td>
+		</tr>
+		<!-- BEGINELSE -->
+		<tr class="row2">
+			<td class="genmed" colspan="4"><span><br />{L_NO_USER_NOMINATIONS}<br /><br /></span></td>
+		</tr>
+		<!-- END nominations -->
+		</table>
+		</form>
+	</td>
+</tr>
+</table>
+
+<br clear="all" />
+
+<!-- INCLUDE breadcrumbs.html -->
+
+<br clear="all" />
+
+<div align="{S_CONTENT_FLOW_END}"><!-- INCLUDE jumpbox.html --></div>	
+<!-- INCLUDE overall_footer.html -->

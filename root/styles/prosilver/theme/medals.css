@@ -1,0 +1,30 @@
+/*  	
+--------------------------------------------------------------
+Mods for medals.css X
+-------------------------------------------------------------- */
+.approve-icon, .approve-icon a	{ background: none top left no-repeat; }
+.approve-icon, .approve-icon a	{ background-image: url("{IMG_ICON_POST_APPROVE_SRC}"); }
+ul.approve-icons, li.approve-icon { width: {IMG_ICON_POST_APPROVE_WIDTH}px; height: {IMG_ICON_POST_APPROVE_HEIGHT}px; }
+
+/* Icon images
+---------------------------------------- */
+.icon-medal {
+	background-position: 0 50%;
+	background-repeat: no-repeat;
+	background-image: none;
+	padding: 1px 0 0 17px;
+}
+.icon-medal	{ background-image: url("{T_THEME_PATH}/images/icon_medal.gif"); }
+.rtl .icon-medal {
+	background-position: 100% 50%;
+	padding: 1px 17px 0 0;
+}
+
+.reason {
+	font-size: 1.2em;
+}
+
+fieldset.fields3 dt {
+	width: 45em;
+	border-right-width: 0;
+}

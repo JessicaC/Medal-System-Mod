@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<?xml-stylesheet type="text/xsl" href="modx.prosilver.en.xsl"?>
+<!--For security purposes, please check: http
+://www.phpbb.com/mods/ for the latest version of this MOD. Although MODs are checked before being allowed in the MODs Database there is no guarantee that there are no security problems within the MOD. No support will be given for MODs not found within the MODs Database which can be found at http://www.phpbb.com/mods/-->
+<mod xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://www.phpbb.com/mods/xml/modx-1.2.1.xsd">
+	<header>
+		<license>http://opensource.org/licenses/gpl-license.php GNU General Public License v2</license>
+
+		<title lang="en">Medals System MOD for phpBB3 Upgrade</title>
+
+		<description lang="en">A system for awarding medals/ribbons to users.</description>
+
+		<author-notes lang="en"><![CDATA[Thanks to ycl for creating the phpbb2 version and giving me permission to do the upgrade.
+Thanks to Geoffreak for getting this mod started.
+Thanks to Gremlinn for doing the hard yards.]]></author-notes>
+
+		<author-group>
+			<author>
+				<realname>Guy Gardner</realname>
+				<email>oddfish@oddfish.co</email>
+				<username>oddfish</username>
+				<homepage>http://www.oddfish.co</homepage>
+			</author>
+			<author>
+				<realname>Nathan DuPra</realname>
+				<email>mods@dupra.net</email>
+				<username>Gremlinn</username>
+				<homepage>http://test.dupra.net</homepage>
+      		<contributions-group>
+      		  <contributions status="past" from="2007-05-29" to="2010-01-22" position="Developer"/>
+      		</contributions-group>
+			</author>
+		</author-group>
+
+		<mod-version>0.11.2 Beta</mod-version>
+
+		<installation>
+			<level>intermediate</level>
+			<time>600</time>
+			<target-version>3.0.9</target-version>
+		</installation>
+
+		<history>
+			<entry>
+				<date>2011-10-09</date>
+				<rev-version>0.11.2 Beta</rev-version>
+				<changelog lang="en">
+					<change>Updated ModX</change>
+					<change>Correct permissions for non founders to nominate and award medals</change>
+					<change>Move Medal template files</change>
+					<change>Move js file out of /includes</change>
+				</changelog>
+			</entry>
+		</history>
+	</header>
+
+	<action-group>
+
+		<copy>
+			<file from="root/medals.php" to="medals.php" />
+			<file from="root/adm/mods/medal_system_mod_version.php" to="adm/mods/medal_system_mod_version.php" />
+			<file from="root/includes/ucp/ucp_medals.php" to="includes/ucp/ucp_medals.php" />
+			<file from="root/language/en/mods/info_medals_mod.php" to="language/en/mods/info_medals_mod.php" />
+			<file from="root/msm_install/index.php" to="msm_install/index.php" />
+			<file from="root/umil/*.*" to="umil/*.*" />
+			<file from="root/styles/prosilver/template/medals/*.*" to="styles/prosilver/template/medals/*.*" />
+		</copy>
+
+		<delete>
+			<file name="styles/prosilver/template/medalcp_awarded_user.html" />
+			<file name="styles/prosilver/template/medalcp_award_user.html" />
+			<file name="styles/prosilver/template/medalcp_nominate.html" />
+			<file name="styles/prosilver/template/medalcp_nominate_user.html" />
+			<file name="styles/prosilver/template/medal_memberlist_view.html" />
+			<file name="styles/prosilver/template/medals.html" />
+			<file name="styles/prosilver/template/ucp_medals_awarded_user.html" />
+			<file name="styles/prosilver/template/ucp_medals_award_user.html" />
+			<file name="styles/prosilver/template/ucp_medals_nominate_user.html" />
+			<file name="includes/toggle_display.js" />
+		</delete>
+
+		<open src="styles/prosilver/template/memberlist_view.html">
+			<edit>
+				<find><![CDATA[<!-- INCLUDE medal_memberlist_view.html -->]]></find>
+				<action type="replace-with"><![CDATA[<!-- INCLUDE medals/medal_memberlist_view.html -->]]></action>
+			</edit>
+		</open>
+		<open src="styles/prosilver/template/overall_header.html">
+			<edit>
+				<find><![CDATA[<!-- IF U_MEDALS --><li class="icon-medal"><a href="{U_MEDALS}" title="{L_MEDALS_VIEW_EXPLAIN}">{L_MEDALS_VIEW}</a></li><!-- ENDIF -->]]></find>
+				<action type="replace-with"><![CDATA[<!-- IF U_MEDALS and S_USER_LOGGED_IN and not S_IS_BOT --><li class="icon-medal"><a href="{U_MEDALS}" title="{L_MEDALS_VIEW_EXPLAIN}">{L_MEDALS_VIEW}</a></li><!-- ENDIF -->]]></action>
+			</edit>
+		</open>
+
+		<php-installer>msm_install/index.php</php-installer>
+
+		<diy-instructions lang="en">
+** Point your browser to /msm_install to install the database changes **
+** Be sure to delete the /msm_install and /umil folders from your server. **
+
+Remember to refresh the board cache.
+		</diy-instructions>
+	</action-group>
+</mod>

@@ -1,0 +1,18 @@
+<!-- INCLUDE overall_header.html -->
+<form id="{MEDAL_ACTION}" action="{MEDAL_SUBMIT}" method="post">
+<h1>{MEDAL_TITLE}</h1>
+<p>{MEDAL_TEXT}</p>
+<fieldset>
+	<legend>{MEDAL_LEGEND}</legend>
+		<dl>
+			<dt><label>{NAME_TITLE}:</label></dt>
+			<dd><label><input name="name" type="text" size="30" maxlength="30" value="{NAME_VALUE}" /></label></dd>
+		</dl>
+</fieldset>
+<fieldset class="submit-buttons">
+	<legend>{L_SUBMIT}</legend>
+	<input type="submit" value="{L_SUBMIT}" name="submit" class="button1"/>&nbsp;
+	<input type="submit" value="{L_CANCEL}" name="cancelcat" class="button2"/>
+</fieldset>
+</form>
+<!-- INCLUDE overall_footer.html -->

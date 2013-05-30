@@ -1,0 +1,82 @@
+<!-- INCLUDE ucp_header.html -->
+</form>
+<table class="tablebg" width="100%" cellspacing="1">
+<tr>
+	<th colspan="3" valign="middle">{L_MEDAL_CP}</th>
+</tr>
+<tr>
+	<td class="row3" colspan="3"><span class="gensmall">{L_AWARD_TO} {USERNAME}</span></td>
+</tr>
+<tr>
+	<td width="80%" valign="top">
+		<form method="post" action="{U_MEDALS_ACTION}" name="post">
+		<table class="tablebg" width="100%" cellspacing="1">
+		<tr>
+			<td class="row1"><b class="genmed">{L_MEDAL}:</b></td>
+			<td class="row2"><select class="post" name="med" id="medal" onclick="ipreview(this)">{MEDALS}</select></td>
+		</tr>
+		<tr>
+			<td class="row1"><b class="genmed">{L_IMAGE_PREVIEW}:</b></td>
+			<td class="row2"><span id="imagepreview"></span></td>
+		</tr>
+		<tr>
+			<!-- IF .smiley -->
+			<td class="row1" valign="top">
+					<b class="genmed">{L_MEDAL_AWARD_REASON}:</b>{L_MEDAL_AWARD_REASON_EXPLAIN}&nbsp;<br /><br />
+					<table width="100%" cellspacing="0" cellpadding="0" border="0">
+					<tr>
+						<td valign="top" align="center" style="width: 100%;">
+							<b class="gensmall" >{L_SMILIES}</b><br />
+							<!-- BEGIN smiley -->
+								<a href="#" onclick="insert_text('{smiley.A_SMILEY_CODE}', true); return false;"><img src="{smiley.SMILEY_IMG}" width="{smiley.SMILEY_WIDTH}" height="{smiley.SMILEY_HEIGHT}" alt="{smiley.SMILEY_CODE}" title="{smiley.SMILEY_DESC}" /></a>
+							<!-- END smiley -->
+							<!-- IF S_SHOW_SMILEY_LINK -->
+								<br /><a href="{U_MORE_SMILIES}" onclick="window.open('{U_MORE_SMILIES}', '_phpbbsmilies', 'HEIGHT=350,resizable=yes,scrollbars=yes,WIDTH=300'); return false;">{L_MORE_SMILIES}</a>
+							<!-- ENDIF -->
+						</td>
+					</tr>
+					</table>
+			</td>
+			<!-- ENDIF -->
+			<td class="row2" width="78%">
+				<table width="100%" cellspacing="0" cellpadding="0" border="0">
+				<!-- INCLUDE posting_buttons.html -->
+				<tr>
+					<td valign="top" style="width: 100%;"><textarea name="message" rows="15" cols="76" tabindex="3" onselect="storeCaret(this);" onclick="storeCaret(this);" onkeyup="storeCaret(this);" onfocus="initInsertions();" style="width: 98%;">{MESSAGE}</textarea></td>
+					<!-- IF S_BBCODE_ALLOWED -->
+					<td width="80" align="center" valign="top">
+						<script type="text/javascript">
+						// <![CDATA[
+							colorPalette('v', 7, 6)
+						// ]]>
+						</script>
+					</td>
+					<!-- ENDIF -->
+			 	</tr>
+				</table>
+			</td>
+		</tr>
+		<tr>
+			<td class="cat" colspan="2" align="center">
+				<input type="submit" accesskey="s" tabindex="6" name="submit" value="{L_SUBMIT}" class="btnmain" />
+			</td>
+		</tr>
+		</table>
+		</form>
+	</td>
+</tr>
+</table>
+<script type="text/javascript">
+	{JS}
+	var form_name = 'post';
+	var text_name = 'message';
+	function ipreview(element)
+	{
+		if (medals[element.value] == '' || medals[element.value] == null)
+			document.getElementById('imagepreview').innerHTML = '<br />{L_IMAGE_ERROR}';		
+		else
+			document.getElementById('imagepreview').innerHTML = '<br /><img src="'+medals[element.value]+'" title="'+medals_desc[element.value]+'" alt="'+medals_desc[element.value]+'" style="max-width: 60px; max-height: 60px;" /> '+medals_desc[element.value];
+	}
+</script>
+<form>
+<!-- INCLUDE ucp_footer.html -->

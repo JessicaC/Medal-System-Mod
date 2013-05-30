@@ -1,0 +1,248 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<?xml-stylesheet type="text/xsl" href="modx.prosilver.en.xsl"?>
+<!--For security purposes, please check: http://www.phpbb.com/mods/ for the latest version of this MOD. Although MODs are checked before being allowed in the MODs Database there is no guarantee that there are no security problems within the MOD. No support will be given for MODs not found within the MODs Database which can be found at http://www.phpbb.com/mods/-->
+<mod xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://www.phpbb.com/mods/xml/modx-1.2.1.xsd">
+	<header>
+		<license>http://opensource.org/licenses/gpl-license.php GNU General Public License v2</license>
+		<title lang="en">Medals System MOD for phpBB3</title>
+		<description lang="en">A system for awarding medals/ribbons to users.</description>
+		<author-notes lang="en"><![CDATA[Thanks to ycl for creating the phpbb2 version and giving me permission do the upgrade.
+Thanks to Geoffreak for getting this mod started.
+]]>
+		</author-notes>
+		<author-group>
+			<author>
+				<realname>Nathan DuPra</realname>
+				<email>mods@dupra.net</email>
+				<username>Gremlinn</username>
+				<homepage>http://test.dupra.net</homepage>
+			</author>
+		</author-group>
+		<mod-version>0.11.0 Beta</mod-version>
+		<installation>
+			<level>intermediate</level>
+			<time>300</time>
+			<target-version>3.0.5</target-version>
+		</installation>
+		<history>
+			<entry>
+				<date>2009-11-12</date>
+				<rev-version>0.11.0 Beta</rev-version>
+				<changelog lang="en">
+					<change>CODE CLEANUP: viewtopic.php</change>
+					<change>CODE CLEANUP: Medals_System_MOD.xml</change>
+					<change>CODE CLEANUP: includes/acp/info/acp_medals.php</change>
+					<change>CODE CLEANUP: includes/acp/acp_medals.php</change>
+					<change>CODE CLEANUP: includes/medlas_viewtopic.php</change>
+				</changelog>
+			</entry>
+		</history>
+	</header>
+	<action-group>
+		<copy>
+			<file from="root/medals.php" to="medals.php" />
+			<file from="root/includes/dynamic_image.php" to="includes/dynamic_image.php" />
+			<file from="root/includes/medals_viewtopic.php" to="includes/medals_viewtopic.php" />
+			<file from="root/includes/acp/acp_medals.php" to="includes/acp/acp_medals.php" />
+			<file from="root/includes/acp/info/acp_medals.php" to="includes/acp/info/acp_medals.php" />
+			<file from="root/includes/ucp/ucp_medals.php" to="includes/ucp/ucp_medals.php" />
+			<file from="root/includes/ucp/info/ucp_medals.php" to="includes/ucp/info/ucp_medals.php" />
+			<file from="root/language/en/mods/info_medals_mod.php" to="language/en/mods/info_medals_mod.php" />
+			<file from="root/language/en/mods/info_ucp_medals.php" to="language/en/mods/info_ucp_medals.php" />
+			<file from="root/msm_install/*.*" to="msm_install/*.*" />
+			<file from="root/umil/*.*" to="umil/*.*" />
+			<file from="root/styles/prosilver/template/ucp_medals_award_user.html" to="styles/prosilver/template/ucp_medals_award_user.html" />
+			<file from="root/styles/prosilver/template/ucp_medals_awarded_user.html" to="styles/prosilver/template/ucp_medals_awarded_user.html" />
+			<file from="root/styles/prosilver/template/ucp_medals_nominate_user.html" to="styles/prosilver/template/ucp_medals_nominate_user.html" />
+		</copy>
+				
+		<open src="viewtopic.php">
+			<edit>
+				<comment lang="en"><![CDATA[Clean up some code for easier updating]]></comment>
+				<find><![CDATA[	if ( $config['medals_active'] )
+	{
+		// Medals Display
+		$sql = "SELECT user_id, nominated
+			FROM " . MEDALS_AWARDED_TABLE . "
+			WHERE user_id = '" . $poster_id . "'";
+		$m_result = $db->sql_query($sql);
+		$medals_count   = 0;
+
+		$has_perms = $user->data['user_type'] == USER_FOUNDER || $auth->acl_get('u_award_medals');
+		$nominated_medals = false;
+		while ($m_row = $db->sql_fetchrow($m_result))
+		{
+			if ($has_perms && $m_row['nominated'])
+			{
+				$nominated_medals = true;
+			}
+			else if (!$m_row['nominated'])
+			{
+				$medals_count++  ;
+			}
+		}
+
+		$user->add_lang('mods/info_medals_mod');
+
+		$template->assign_block_vars('postrow.medal', array(
+			'MEDALS_COUNT'		=> $medals_count,
+			'MEDALS_NOMINATED'	=> ($nominated_medals) ? sprintf($user->lang['USER_IS_NOMINATED'], append_sid('medals.php?m=validate&u=' . $poster_id)) : '',
+			'S_HAS_MEDALS'		=> ($medals_count) ? true : false,
+			'S_HAS_NOMINATIONS'	=> ($nominated_medals) ? true : false,
+		));
+
+		if ( $config['medal_display_topic'] > 0 && $medals_count > 0)
+		{
+			$medal_width	= ( $config['medal_small_img_width'] ) ? ' width="'.$config['medal_small_img_width'].'"' : '';
+			$medal_height	= ( $config['medal_small_img_ht'] ) ? ' height="'.$config['medal_small_img_ht'].'"' : '';
+			$medal_rows   	= ( $config['medal_topic_col'] ) ? $config['medal_topic_col'] : 1 ;
+			$medal_cols		= ( $config['medal_topic_row'] ) ? $config['medal_topic_row'] : 1 ;
+
+			$template->assign_block_vars('postrow.medal', array());
+
+			$sql = "SELECT m.id, m.name, m.image, m.device, m.dynamic, m.parent, ma.time, c.id as cat_id, c.name as cat_name
+			FROM " . MEDALS_TABLE . " m, " . MEDALS_AWARDED_TABLE . " ma, " . MEDALS_CATS_TABLE . " c
+			WHERE ma.user_id = '" . $poster_id . "'
+			AND m.parent = c.id
+			AND m.id = ma.medal_id
+			AND ma.nominated <> 1
+			ORDER BY c.order_id, m.order_id, ma.time";
+
+			if ($result = $db->sql_query($sql))
+			{
+				$rowset2 = array();
+				while ($row = $db->sql_fetchrow($result))
+				{
+					$rowset2[$row['image']]['name'] = $row['name'];
+					if ($rowset2[$row['image']]['name'] == $row['name'])
+					{
+						if ( isset($rowset2[$row['image']]['count']) )
+						{
+							$rowset2[$row['image']]['count'] += '1';
+						}
+						else
+						{
+							$rowset2[$row['image']]['count'] = '1';
+						}
+					}
+					$rowset2[$row['image']]['dynamic'] = $row['dynamic'];
+					$rowset2[$row['image']]['device']  = $row['device'];
+				}
+				if ( $medals_count > 0 )
+				{
+					$split_row = $medal_cols - 1;
+
+					$s_colspan = 0;
+					$row = 0;
+					$col = 0;
+
+					while (list($image, $medal) = @each($rowset2))
+					{
+						if (!$col)
+						{ 
+							$template->assign_block_vars('postrow.medal.medal_row', array()); 
+						}
+
+						if ($medal['count'] > 1)
+						{
+							if ( $medal['dynamic'] )
+							{
+								$device = $phpbb_root_path . 'images/medals/devices/' . $medal['device'] . '-' . ($medal['count'] - 1) . '.gif' ;
+								$image = $phpbb_root_path . 'medals.php?m=mi&med=' . $phpbb_root_path . 'images/medals/' . $image . '&' . 'd=' . $device ;
+							}
+							else
+							{
+								$cluster = '-' . $medal['count'] ;
+								$device_image = substr_replace($image,$cluster, -4) . substr($image, -4) ;
+								if ( file_exists($device_image) )
+								{
+									$image = $device_image ;
+								}
+								$image = $phpbb_root_path . 'images/medals/' . $image ;
+							}
+						}
+						else
+						{
+							$image = $phpbb_root_path . 'images/medals/' . $image ;
+						}
+
+						$template->assign_block_vars('postrow.medal.medal_row.medal_col', array(
+							'MEDAL_IMAGE' => $image,
+							'MEDAL_WIDTH' => $medal_width,
+							'MEDAL_HEIGHT' => $medal_height,
+							'MEDAL_NAME' => $medal['name'],
+							'MEDAL_COUNT' => '(' . $medal['count']. ')')
+						);
+
+						$s_colspan = max($s_colspan, $col + 1);
+
+						if ($col == $split_row)
+						{
+							if ($row == $medal_rows - 1) 
+							{ 
+								break; 
+							}
+							$col = 0;
+							$row++;
+						}
+						else 
+						{ 
+							$col++; 
+						}
+					}
+				}
+			}
+		}
+	}
+]]></find>
+				<action type="replace-with"><![CDATA[		if ( $config['medals_active'] )
+		{
+			include($phpbb_root_path . 'includes/medals_viewtopic.' . $phpEx);
+		}
+]]></action>
+			</edit>
+		</open>
+		<open src="includes/functions.php">
+			<edit>
+				<find><![CDATA[		'U_MEDALS'				=> ($config['medals_active']) ? append_sid("{$phpbb_root_path}medals.$phpEx") : '',]]></find>
+				<action type="replace-with"><![CDATA[		'U_MEDALS'				=> append_sid("{$phpbb_root_path}medals.$phpEx"),]]></action>
+			</edit>
+		</open>
+		<open src="language/en/common.php">
+			<edit>
+				<comment lang="en"><![CDATA[Permissions and module names]]></comment>
+				<find><![CDATA[	// Medals System MOD for phpBB3
+	'MEDALS_VIEW'					=> 'Medals',
+	'MEDALS_VIEW_EXPLAIN'			=> 'View Medals',
+]]></find>
+				<action type="before-add"><![CDATA[));
+
+$lang = array_merge($lang, array(]]></action>
+			</edit>
+		</open>
+		<open src="styles/prosilver/template/memberlist_view.html">
+			<edit>
+				<find><![CDATA[			<!-- IF U_CAN_AWARD_MEDALS --> [ <a href="{U_CAN_AWARD_MEDALS}">{L_MEDAL_CP}</a> ]<!-- ENDIF -->
+]]></find>
+				<action type="replace-with"></action>
+			</edit>
+		</open>
+		<open src="styles/subsilver2/template/memberlist_view.html">
+			<edit>
+				<find><![CDATA[<!-- IF U_CAN_AWARD_MEDALS --><span class="genmed"> [ <a href="{U_CAN_AWARD_MEDALS}">{L_MEDAL_CP}</a> ]</span><!-- ENDIF -->]]></find>
+				<action type="replace-with"></action>
+			</edit>
+		</open>
+		<diy-instructions lang="en">
+** Point your browser to /msm_install to Update your database **
+** Be sure to delete the /msm_install and /umil folders from your server. **
+
+remove styles/prosilver/template/medalcp_award_user.html
+remove styles/prosilver/template/medalcp_awarded_user.html
+remove styles/prosilver/template/medalcp_nominate_user.html
+remove styles/subsilver2/template/medalcp_award_user.html
+remove styles/subsilver2/template/medalcp_awarded_user.html
+remove styles/subsilver2/template/medalcp_nominate_user.html
+		</diy-instructions>
+	</action-group>
+</mod>

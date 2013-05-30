@@ -1,0 +1,287 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<?xml-stylesheet type="text/xsl" href="modx.prosilver.en.xsl"?>
+<!--For security purposes, please check: http
+://www.phpbb.com/mods/ for the latest version of this MOD. Although MODs are checked before being allowed in the MODs Database there is no guarantee that there are no security problems within the MOD. No support will be given for MODs not found within the MODs Database which can be found at http://www.phpbb.com/mods/-->
+<mod xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://www.phpbb.com/mods/xml/modx-1.2.5.xsd">
+	<header>
+		<license>http://opensource.org/licenses/gpl-license.php GNU General Public License v2</license>
+
+		<title lang="en">Medal System</title>
+
+		<description lang="en">A system for awarding medals/ribbons to users.</description>
+
+		<author-notes lang="en"><![CDATA[Thanks to ycl for creating the phpbb2 version and giving me permission to do the upgrade.
+Thanks to Geoffreak for getting this mod started.
+Thanks to Gremlinn for doing the hard yards.]]></author-notes>
+
+		<author-group>
+			<author>
+				<realname>Guy Gardner</realname>
+				<email>oddfish@oddfish.co</email>
+				<username>oddfish</username>
+				<homepage>http://www.oddfish.co</homepage>
+			</author>
+			<author>
+				<realname>Nathan DuPra</realname>
+				<email>mods@dupra.net</email>
+				<username>Gremlinn</username>
+				<homepage>http://test.dupra.net</homepage>
+      		<contributions-group>
+      		  <contributions status="past" from="2007-05-29" to="2010-01-22" position="Developer"/>
+      		</contributions-group>
+			</author>
+		</author-group>
+
+		<mod-version>0.21.0 Beta</mod-version>
+
+		<installation>
+			<level>intermediate</level>
+			<time>600</time>
+			<target-version>3.0.10</target-version>
+		</installation>
+
+		<history>
+			<entry>
+				<date>2011-12-21</date>
+				<rev-version>0.21.0 Beta</rev-version>
+				<changelog lang="en">
+					<change>Check before db install</change>
+					<change>Update adm recognition of Ultimate Points</change>
+				</changelog>
+			</entry>
+			<entry>
+				<date>2011-11-05</date>
+				<rev-version>0.20.0 Beta</rev-version>
+				<changelog lang="en">
+					<change>Remove UCP Medals tab</change>
+					<change>Move profile Nomination and Award links to User Statistics with medal count</change>
+					<change>Allow some redirects from errors and awards</change>
+					<change>Rename Medal Control Panel to Medal Award Panel for clarity.</change>
+					<change>Correct Handyman's version checking</change>
+					<change>Added Medal remove confirmation</change>
+				</changelog>
+			</entry>
+			<entry>
+				<date>2011-10-09</date>
+				<rev-version>0.11.2 Beta</rev-version>
+				<changelog lang="en">
+					<change>Updated ModX</change>
+					<change>Correct permissions for non founders to nominate and award medals</change>
+					<change>Move Medal template files</change>
+					<change>Move js file out of /includes</change>
+				</changelog>
+			</entry>
+			<entry>
+				<date>2009-01-18</date>
+				<rev-version>0.11.1 Beta</rev-version>
+				<changelog lang="en">
+					<change>CODE CLEANUP: viewtopic.php</change>
+					<change>CODE CLEANUP: Medals_System_MOD.xml</change>
+					<change>CODE CLEANUP: includes/acp/info/acp_medals.php</change>
+					<change>CODE CLEANUP: includes/acp/acp_medals.php</change>
+					<change>CODE CLEANUP: includes/medals_viewtopic.php</change>
+					<change>VERSION: includes/acp/info/acp_medals.php</change>
+				</changelog>
+			</entry>
+			<entry>
+				<date>2009-11-16</date>
+				<rev-version>0.11.0 Beta</rev-version>
+				<changelog lang="en">
+					<change>CODE CLEANUP: viewtopic.php</change>
+					<change>CODE CLEANUP: Medals_System_MOD.xml</change>
+					<change>CODE CLEANUP: includes/acp/info/acp_medals.php</change>
+					<change>CODE CLEANUP: includes/acp/acp_medals.php</change>
+					<change>CODE CLEANUP: includes/medals_viewtopic.php</change>
+					<change>TEMPLATE: Added Prosilver template changes here to aid automod installs</change>
+					<change>TEST: Compatible with phpbb 3.0.6</change>
+					<change>VERSION: includes/acp/info/acp_medals.php</change>
+				</changelog>
+			</entry>
+		</history>
+		<link-group>
+			<link type="template" href="contrib/subsilver2.xml" lang="en">subsilver2</link>
+		</link-group>
+
+	</header>
+
+	<action-group>
+
+		<copy>
+			<file from="root/medals.php" to="medals.php" />
+			<file from="root/adm/*.*" to="adm/*.*" />
+			<file from="root/images/*.*" to="images/*.*" />
+			<file from="root/includes/*.*" to="includes/*.*" />
+			<file from="root/language/en/mods/*.*" to="language/en/mods/*.*" />
+			<file from="root/msm_install/index.php" to="msm_install/index.php" />
+			<file from="root/umil/*.*" to="umil/*.*" />
+			<file from="root/styles/prosilver/*.*" to="styles/prosilver/*.*" />
+		</copy>
+
+		<open src="memberlist.php">
+			<edit>
+				<comment lang="en"><![CDATA[viewprofile medals]]></comment>
+				<find><![CDATA[		$user_id = (int) $member['user_id'];
+]]></find>
+				<action type="after-add"><![CDATA[		if ( $config['medals_active'] )
+		{
+			include($phpbb_root_path . 'includes/medals_memberlist.' . $phpEx);
+		}
+]]></action>
+			</edit>
+			<edit>
+				<find><![CDATA[			'S_ZEBRA'			=> ]]></find>
+				<action type="before-add"><![CDATA[// Medals System MOD
+			'USER_ID'				=> $user_id,
+			'U_NOMINATE'			=> ( $s_nominate ) ? append_sid("{$phpbb_root_path}medals.$phpEx", "m=nominate&amp;u={$user_id}") : '',
+			'U_CAN_AWARD_MEDALS'	=> ($auth->acl_get('a_user') || $is_mod ) ? append_sid("{$phpbb_root_path}medals.$phpEx", "m=award&amp;u={$user_id}") : '',
+			'L_USER_MEDAL'			=> $user->lang['MEDALS'],
+			'USER_MEDAL_COUNT'		=> $medal_count,
+			'L_MEDAL_INFORMATION'	=> $user->lang['MEDAL_INFORMATION'],
+			'L_MEDAL_NAME'			=> $user->lang['MEDAL'],
+			'L_MEDAL_DETAIL'		=> $user->lang['MEDAL_DETAIL'],
+// ----------------------------
+]]></action>
+			</edit>
+		</open>
+		<open src="viewtopic.php">
+			<edit>
+				<comment lang="en"><![CDATA[medals count and nominations]]></comment>
+				<find><![CDATA[	$prev_post_id = $row['post_id'];]]></find>
+				<action type="after-add"><![CDATA[		if ( $config['medals_active'] )
+		{
+			include($phpbb_root_path . 'includes/medals_viewtopic.' . $phpEx);
+		}
+]]></action>
+			</edit>
+		</open>
+		<open src="includes/constants.php">
+			<edit>
+				<comment lang="en"><![CDATA[Header]]></comment>
+				<find><![CDATA[// Additional tables]]></find>
+				<action type="after-add"><![CDATA[// Medals Mod
+define('MEDALS_TABLE',				$table_prefix . 'medals');
+define('MEDALS_AWARDED_TABLE',		$table_prefix . 'medals_awarded');
+define('MEDALS_CATS_TABLE',			$table_prefix . 'medals_cats');
+]]></action>
+			</edit>
+		</open>
+		<open src="includes/functions.php">
+			<edit>
+				<comment lang="en"><![CDATA[Header]]></comment>
+				<find><![CDATA[		'U_FAQ'					=> append_sid("{$phpbb_root_path}faq.$phpEx"),]]></find>
+				<action type="after-add"><![CDATA[		'U_MEDALS'				=> (isset($config['medals_active'])) ? $config['medals_active'] : true ? append_sid("{$phpbb_root_path}medals.$phpEx") : '',]]></action>
+			</edit>
+		</open>
+		<open src="includes/functions_user.php">
+			<edit>
+				<comment lang="en"><![CDATA[Header]]></comment>
+				<find><![CDATA[	$table_ary = array(USERS_TABLE, USER_GROUP_TABLE, TOPICS_WATCH_TABLE, FORUMS_WATCH_TABLE, ACL_USERS_TABLE, TOPICS_TRACK_TABLE, TOPICS_POSTED_TABLE, FORUMS_TRACK_TABLE, PROFILE_FIELDS_DATA_TABLE, MODERATOR_CACHE_TABLE]]></find>
+				<inline-edit>
+				  <inline-find><![CDATA[);]]></inline-find>
+				  <inline-action type="before-add"><![CDATA[, MEDALS_AWARDED_TABLE]]></inline-action>
+				</inline-edit>
+			</edit>
+		</open>
+		<open src="includes/acp/acp_styles.php">
+			<edit>
+				<comment lang="en"><![CDATA[Permissions and module names]]></comment>
+				<find><![CDATA[				'icon_back_top', 'icon_contact_aim', 'icon_contact_email', 'icon_contact_icq', 'icon_contact_jabber', 'icon_contact_msnm', 'icon_contact_pm', 'icon_contact_yahoo', 'icon_contact_www', 'icon_post_delete']]></find>
+				<inline-edit>
+				  <inline-find><![CDATA[, 'icon_post_delete']]></inline-find>
+				  <inline-action type="after-add"><![CDATA[, 'icon_post_approve']]></inline-action>
+				</inline-edit>
+			</edit>
+		</open>
+		<open src="language/en/common.php">
+			<edit>
+				<comment lang="en"><![CDATA[Permissions and module names]]></comment>
+				<find><![CDATA[?>]]></find>
+				<action type="before-add"><![CDATA[$lang = array_merge($lang, array(
+	// Medals System MOD for phpBB3
+	'MEDALS_VIEW'					=> 'Medals',
+	'MEDALS_VIEW_EXPLAIN'			=> 'View Medals',
+));
+]]></action>
+			</edit>
+		</open>
+		<open src="styles/prosilver/imageset/imageset.cfg">
+			<edit>
+				<comment lang="en"><![CDATA[Include imageset for approve button]]></comment>
+				<find><![CDATA[img_icon_post_delete = icon_post_delete.gif*20*20]]></find>
+				<action type="after-add"><![CDATA[img_icon_post_approve = icon_post_approve.gif*20*20]]></action>
+			</edit>
+		</open>
+		<open src="styles/prosilver/template/memberlist_view.html">
+			<edit>
+				<comment lang="en"><![CDATA[html viewprofile medals]]></comment>
+				<find><![CDATA[			<dt>{L_TOTAL_POSTS}:</dt>]]></find>
+				<action type="before-add"><![CDATA[			<dt>{L_MEDALS_VIEW}:</dt> <dd>{USER_MEDAL_COUNT} <!-- IF U_CAN_AWARD_MEDALS -->| <a href="{U_CAN_AWARD_MEDALS}"><strong>{L_AWARD_MEDAL}</strong></a><!-- ENDIF --><!-- IF U_NOMINATE --> | <a href="{U_NOMINATE}"><strong>{L_NOMINATE}</strong></a><!-- ENDIF --></dd>]]></action>
+			</edit>
+			<edit>
+				<find><![CDATA[<!-- INCLUDE jumpbox.html -->]]></find>
+				<action type="before-add"><![CDATA[<!-- INCLUDE medals/medal_memberlist_view.html -->]]></action>
+			</edit>
+		</open>
+		<open src="styles/prosilver/template/overall_header.html">
+			<edit>
+				<comment lang="en"><![CDATA[Add medals to the menu]]></comment>
+				<find><![CDATA[				<li class="icon-faq"><a href="{U_FAQ}" title="{L_FAQ_EXPLAIN}">{L_FAQ}</a></li>
+]]></find>
+				<action type="after-add"><![CDATA[				<!-- IF U_MEDALS and S_USER_LOGGED_IN and not S_IS_BOT --><li class="icon-medal"><a href="{U_MEDALS}" title="{L_MEDALS_VIEW_EXPLAIN}">{L_MEDALS_VIEW}</a></li><!-- ENDIF -->
+]]></action>
+			</edit>
+		</open>
+		<open src="styles/prosilver/template/viewtopic_body.html">
+			<edit>
+				<comment lang="en"><![CDATA[more showing of medals count]]></comment>
+				<find><![CDATA[		<!-- IF postrow.POSTER_FROM --><dd><strong>{L_LOCATION}:</strong> {postrow.POSTER_FROM}</dd><!-- ENDIF -->
+]]></find>
+				<action type="after-add"><![CDATA[		<!-- BEGIN medal -->
+		<!-- IF postrow.medal.S_HAS_MEDALS or postrow.medal.S_HAS_NOMINATIONS --><dd><strong>{L_MEDALS}:</strong> {postrow.medal.MEDALS_COUNT}{postrow.medal.MEDALS_NOMINATED}</dd><!-- ENDIF -->
+			<!-- BEGIN medal_row -->
+			<dd>
+				<!-- BEGIN medal_col -->
+					<img src="{postrow.medal.medal_row.medal_col.MEDAL_IMAGE}" border="0" alt="{postrow.medal.medal_row.medal_col.MEDAL_NAME} {postrow.medal.medal_row.medal_col.MEDAL_COUNT}" title="{postrow.medal.medal_row.medal_col.MEDAL_NAME} {postrow.medal.medal_row.medal_col.MEDAL_COUNT}" {postrow.medal.medal_row.medal_col.MEDAL_WIDTH} {postrow.medal.medal_row.medal_col.MEDAL_HEIGHT} />
+				<!-- END medal_col -->
+			</dd>
+			<!-- END medal_row -->
+		<!-- END medal -->
+]]></action>
+			</edit>
+		</open>
+		<open src="styles/prosilver/theme/stylesheet.css">
+			<edit>
+				<comment lang="en"><![CDATA[Include css for mods]]></comment>
+				<find><![CDATA[@import url("colours.css");]]></find>
+				<action type="after-add"><![CDATA[@import url("medals.css");]]></action>
+			</edit>
+		</open>
+
+		<php-installer>msm_install/index.php</php-installer>
+
+		<diy-instructions lang="en">
+** Point your browser to /msm_install to install the database changes **
+** Be sure to delete the /msm_install and /umil folders from your server. **
+
+Remember to refresh the prosilver template cache.
+You may need to refresh the prosilver theme from inside the ACP.
+
+Upload medal images to images/medals.
+Upload devices (if you are going to use dynamic medals) to images/medals/devices.
+
+Make sure you clear your board cache to show all the changes this mod makes!
+ 
+For medals that can have multiple awards, create the medal.  Then, create the second award medal and
+save the file by the same name with a -2 in the name.
+Example:  medal.gif, medal-2.gif, medal-3.gif
+
+Devices can be have a base name of your choosing and can be defined per medal.
+Create each subsequent device with a award count starting at 2.
+Example:  device-2.gif, device-3.gif, etc...
+
+The Extras directory contains some sample images.
+There is also a photoshop file with some military medals and devices.  Just make visible the medal and device you need.
+Save the file for the web.
+		</diy-instructions>
+	</action-group>
+</mod>

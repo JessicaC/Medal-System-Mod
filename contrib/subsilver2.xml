@@ -1,0 +1,130 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<?xml-stylesheet type="text/xsl" href="modx.prosilver.en.xsl"?>
+<!--For security purposes, please check: http
+://www.phpbb.com/mods/ for the latest version of this MOD. Although MODs are checked before being allowed in the MODs Database there is no guarantee that there are no security problems within the MOD. No support will be given for MODs not found within the MODs Database which can be found at http://www.phpbb.com/mods/-->
+<mod xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://www.phpbb.com/mods/xml/modx-1.2.5.xsd">
+	<header>
+		<license>http://opensource.org/licenses/gpl-license.php GNU General Public License v2</license>
+
+		<title lang="en">Medal System MOD for phpBB3</title>
+
+		<description lang="en">A system for awarding medals/ribbons to users.</description>
+
+		<author-notes lang="en"><![CDATA[Thanks to ycl for creating the phpbb2 version and giving me permission do the upgrade.
+Thanks to Geoffreak for getting this mod started.
+Thanks to Gremlinn for doing the hard yards.
+]]>
+		</author-notes>
+
+		<author-group>
+			<author>
+				<realname>Guy Gardner</realname>
+				<email>oddfish@oddfish.co</email>
+				<username>oddfish</username>
+				<homepage>http://www.oddfish.co</homepage>
+			</author>
+			<author>
+				<realname>Nathan DuPra</realname>
+				<email>mods@dupra.net</email>
+				<username>Gremlinn</username>
+				<homepage>http://test.dupra.net</homepage>
+      		<contributions-group>
+      		  <contributions status="past" from="2007-05-29" to="2010-01-22" position="Developer"/>
+      		</contributions-group>
+			</author>
+		</author-group>
+
+
+		<mod-version>0.21.0 Beta</mod-version>
+
+		<installation>
+			<level>easy</level>
+			<time>300</time>
+			<target-version>3.0.10</target-version>
+		</installation>
+
+		<history>
+			<entry>
+				<date>2011-11-05</date>
+				<rev-version>0.20.0 Beta</rev-version>
+				<changelog lang="en">
+					<change>Move profile Nomination and Award links to User Statistics with medal count</change>
+					<change>Rename Medal Control Panel to Medal Award Panel for clarity.</change>
+				</changelog>
+			</entry>
+		</history>
+		<link-group>
+			<link type="template" href="../upgrade/subsilver-0_11_2-0_20_0.xml" lang="en">subsilver2 Upgrade instructions</link>
+			<link type="parent" href="../install.xml" lang="en">Main install instructions</link>
+		</link-group>
+	</header>
+	<action-group>
+
+		<copy>
+			<file from="root/styles/subsilver2/imageset/icon_post_approve.gif" to="styles/subsilver2/imageset/icon_post_approve.gif" />
+			<file from="root/styles/subsilver2/template/medals/*.*" to="styles/subsilver2/template/medals/*.*" />
+			<file from="root/styles/subsilver2/theme/medals.css" to="styles/subsilver2/theme/medals.css" />
+			<file from="root/styles/subsilver2/theme/images/icon_medal.gif" to="styles/subsilver2/theme/images/icon_medal.gif" />
+		</copy>
+
+		<open src="styles/subsilver2/template/memberlist_view.html">
+			<edit>
+				<find><![CDATA[<a href="{U_WARN}">{L_WARN_USER}</a><!-- ENDIF --> ]</span><!-- ENDIF --></td>
+				</tr>
+			<!-- ENDIF -->]]></find>
+				<action type="after-add"><![CDATA[			<tr>
+				<td class="gen" align="{S_CONTENT_FLOW_END}" valign="top" nowrap="nowrap">{L_MEDALS_VIEW}: </td>
+				<td><b class="gen">{USER_MEDAL_COUNT}</b><!-- IF U_CAN_AWARD_MEDALS or U_NOMINATE --><br /><span class="genmed"> [ <!-- IF U_CAN_AWARD_MEDALS --><a href="{U_CAN_AWARD_MEDALS}">{L_AWARD_MEDAL}</a><!-- ENDIF --> <!-- IF U_NOMINATE --><!-- IF U_CAN_AWARD_MEDALS --> | <!-- ENDIF --><a href="{U_NOMINATE}">{L_NOMINATE}</a><!-- ENDIF --> ]</span><!-- ENDIF --></td>
+			</tr>]]></action>
+			</edit>
+			<edit>
+				<find><![CDATA[</div>
+
+<br clear="all" />
+
+<!-- INCLUDE breadcrumbs.html -->
+]]></find>
+				<action type="before-add"><![CDATA[<!-- INCLUDE medals/medal_memberlist_view.html -->]]></action>
+			</edit>
+		</open>
+		<open src="styles/subsilver2/template/overall_header.html">
+			<edit>
+				<comment><![CDATA[Add medals to the menu]]></comment>
+				<find><![CDATA[				<a href="{U_FAQ}"><img src="{T_THEME_PATH}/images/icon_mini_faq.gif" width="12" height="13" alt="*" /> {L_FAQ}</a>
+]]></find>
+				<action type="after-add"><![CDATA[				<!-- IF U_MEDALS and S_USER_LOGGED_IN and not S_IS_BOT -->&nbsp; &nbsp;<a href="{U_MEDALS}"><img src="{T_THEME_PATH}/images/icon_medal.gif" width="12" height="13" alt="*" /> {L_MEDALS_VIEW}</a><!-- ENDIF -->
+]]></action>
+			</edit>
+		</open>
+		<open src="styles/subsilver2/template/viewtopic_body.html">
+			<edit>
+				<comment><![CDATA[more showing of medals count]]></comment>
+				<find><![CDATA[					<!-- IF postrow.POSTER_FROM --><br /><b>{L_LOCATION}:</b> {postrow.POSTER_FROM}<!-- ENDIF -->
+]]></find>
+				<action type="after-add"><![CDATA[					<!-- BEGIN medal -->
+					<!-- IF postrow.medal.S_HAS_MEDALS or postrow.medal.S_HAS_NOMINATIONS --><br /><b>{L_MEDALS}:</b> {postrow.medal.MEDALS_COUNT}{postrow.medal.MEDALS_NOMINATED}<!-- ENDIF -->
+						<!-- BEGIN medal_row -->
+						<br />
+							<!-- BEGIN medal_col -->
+								<img src="{postrow.medal.medal_row.medal_col.MEDAL_IMAGE}" border="0" alt="{postrow.medal.medal_row.medal_col.MEDAL_NAME} {postrow.medal.medal_row.medal_col.MEDAL_COUNT}" title="{postrow.medal.medal_row.medal_col.MEDAL_NAME} {postrow.medal.medal_row.medal_col.MEDAL_COUNT}" {postrow.medal.medal_row.medal_col.MEDAL_WIDTH} {postrow.medal.medal_row.medal_col.MEDAL_HEIGHT} />
+							<!-- END medal_col -->
+						<!-- END medal_row -->
+					<!-- END medal -->
+]]></action>
+			</edit>
+		</open>
+		<open src="styles/subsilver2/theme/stylesheet.css">
+			<edit>
+				<comment><![CDATA[Include css for mods]]></comment>
+				<find><![CDATA[.username-coloured {
+font-weight: bold;
+}]]></find>
+				<action type="after-add"><![CDATA[@import url("medals.css");]]></action>
+			</edit>
+		</open>
+
+		<diy-instructions lang="en">
+You may need to refresh the subsilver2 template and theme from inside the ACP.
+		</diy-instructions>
+	</action-group>
+</mod>

@@ -1,0 +1,56 @@
+<!-- INCLUDE overall_header.html -->
+<form id="{MEDAL_ACTION}" action="{MEDAL_SUBMIT}" method="post">
+<h1>{MEDAL_TITLE}</h1>
+<p>{MEDAL_TEXT}</p>
+<fieldset>
+	<legend>{L_ACP_MEDAL_LEGEND}</legend>
+		<dl>
+			<dt><label>{L_ACP_NAME_TITLE}:</label></dt>
+			<dd><label><input name="name" type="text" size="30" maxlength="30" value="{NAME_VALUE}" /></label></dd>
+		</dl>
+		<dl>
+			<dt><label>{L_ACP_NAME_DESC}:</label></dt>
+			<dd><textarea rows="4" name="description" cols="52">{DESC_VALUE}</textarea></dd>
+		</dl>
+		<dl>
+			<dt><label>{L_ACP_IMAGE_TITLE}:</label><br><span>{L_ACP_IMAGE_EXPLAIN}</span></dt>
+			<dd><label><select name="image" onclick="ipreview(this)">{IMAGE_OPTIONS}</select></label><span id="imagepreview">{MEDAL_IMAGE}</span></dd>
+		</dl>
+		<dl>
+			<dt><label>{L_ACP_DYNAMIC_TITLE}:</label><br><span>{L_ACP_DYNAMIC_EXPLAIN}</span></dt>
+			<dd><label><input name="dynamic" type="radio" value="1" {DYNAMIC_CHECKED_YES} class="radio" /> {L_YES}</label><label><input name="dynamic" type="radio" value="0" {DYNAMIC_CHECKED_NO} class="radio" /> {L_NO}</label></dd>
+		</dl>
+		<dl>
+			<dt><label>{L_ACP_DEVICE_TITLE}:</label><br><span>{L_ACP_DEVICE_EXPLAIN}</span></dt>
+			<dd><label><input name="device" type="text" size="33" maxlength="32" value="{DEVICE_VALUE}" /></label></dd>
+		</dl>
+		<dl>
+			<dt><label>{L_ACP_PARENT_TITLE}:</label><br><span>{L_ACP_PARENT_EXPLAIN}</span></dt>
+			<dd><label><select name="parent">{PARENT_OPTIONS}</select></label></dd>
+		</dl>
+		<dl>
+			<dt><label>{L_ACP_NUMBER}:</label><br><span>{L_ACP_NUMBER_EXPLAIN}</span></dt>
+			<dd><label><input name="number" type="text" size="2" maxlength="2" value="{NUMBER_VALUE}" /></label></dd>
+		</dl>
+		<dl>
+			<dt><label>{L_ACP_NOMINATED_TITLE}:</label><br><span>{L_ACP_NOMINATED_EXPLAIN}</span></dt>
+			<dd><label><input name="nominated" type="radio" value="1" {NOMINATED_CHECKED_YES} class="radio" /> {L_YES}</label><label><input name="nominated" type="radio" value="0" {NOMINATED_CHECKED_NO} class="radio" /> {L_NO}</label></dd>
+		</dl>
+		<dl>
+			<dt><label>{L_ACP_POINTS}:</label><br><span>{L_ACP_POINTS_EXPLAIN}</span></dt>
+			<dd><label><input name="points" type="text" size="5" maxlength="4" value="{POINTS_VALUE}" /></label></dd>
+		</dl>
+</fieldset>
+<fieldset class="submit-buttons">
+	<legend>{L_SUBMIT}</legend>
+	<input type="submit" value="{L_SUBMIT}" name="submit" id="submit" class="button1"/>&nbsp;
+	<input type="submit" value="{L_CANCEL}" name="cancelmedal" class="button2"/>
+</fieldset>
+</form>
+<script type="text/javascript">
+	function ipreview(element)
+	{
+		document.getElementById('imagepreview').innerHTML = '<br /><img src="{PHPBB_ROOT_PATH}images/medals/'+element.value+'" alt="" style="max-width: 60px; max-height: 60px;" />';
+	}
+</script>
+<!-- INCLUDE overall_footer.html -->

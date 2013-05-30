@@ -1,0 +1,42 @@
+<!-- INCLUDE ucp_header.html -->
+<table class="tablebg" width="100%" cellspacing="1">
+<tr>
+	<th colspan="4" valign="middle">{L_MEDAL_CP}</th>
+</tr>
+<tr>
+	<td class="row3" colspan="4"><span class="gensmall">{NOMINATE_MEDAL}</span></td>
+</tr>
+<form method="post" action="{U_MEDALS_ACTION}" name="post">
+<!-- BEGIN nominations -->
+<!-- IF nominations.S_FIRST_ROW -->
+<tr class="row1">
+	<td><h3>{L_DELETE}</h3></th>
+	<td><h3>{L_APPROVE}</h3></th>
+	<td><h3>{L_MEDAL_EDIT}</h3></th>
+	<td><h3>{L_MESSAGE}</h3></th>
+</tr>
+<!-- ENDIF -->
+<tr class="row2">
+	<td align="center"><a href="{nominations.U_DELETE}"><img src="./styles/subsilver2/imageset/en/icon_post_delete.gif" alt="{L_DELETE}" title="{L_DELETE}" /></a></td>
+	<td align="center"><a href="{nominations.U_APPROVE}"><img src="./styles/subsilver2/imageset/icon_post_approve.gif" alt="{L_APPROVE}" title="{L_APPROVE}" /></a></td>
+	<td align="center"><a href="{nominations.U_MEDAL_EDIT}"><img src="./styles/subsilver2/imageset/en/icon_post_edit.gif" alt="{L_MEDAL_EDIT}" title="{L_MEDAL_EDIT}" /></a></td>
+	<td>{nominations.REASON}</td>
+</tr>
+<!-- END nominations -->
+<!-- IF U_DELETE_ALL -->
+<tr class="row1">
+	<td align="center">
+		<a href="{U_DELETE_ALL}"><img src="./styles/subsilver2/imageset/en/icon_post_delete.gif" alt="{L_DELETE_ALL}" title="{L_DELETE_ALL}" /></a>
+	</td>
+	<td colspan="3"><h3>{L_DELETE_ALL}</h3></td>
+</tr>
+<!-- ENDIF -->
+</form>
+<!-- IF S_ROW_COUNT eq 0 -->
+<tr class="row2">
+	<td colspan="4"><span><br />{L_NO_USER_NOMINATIONS}<br /><br /></span></td>
+</tr>
+<!-- ENDIF -->
+</table>
+
+<!-- INCLUDE ucp_footer.html -->

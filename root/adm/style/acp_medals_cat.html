@@ -1,0 +1,66 @@
+<!-- INCLUDE overall_header.html -->
+
+<h1>{L_ACP_MEDALS} [{CAT_TITLE}]</h1>
+<p>{L_ACP_MEDALS_DESC}</p>
+<!-- IF .medals -->
+<table cellspacing="1">
+	<col class="row1" /><col class="row1" /><col class="row2" /><col class="row2" /><col class="row3" />
+<tbody>
+	<tr>
+		<td class="row3" colspan="5"><a href="{U_MEDALS_INDEX}">{L_ACP_MEDALS_MGT_INDEX}</a> -&gt; {CAT_TITLE}</td>
+	</tr>
+	<!-- BEGIN medals -->
+		<tr>
+			<td style="width: 5%; text-align: center;">{medals.MEDAL_IMAGE}</td>
+			<td style="padding-left: 15px;">{medals.MEDAL_TITLE}</td>
+			<td style="width:120px; white-space: nowrap; text-align: left; vertical-align: middle;">{L_ACP_MULT_TO_USER}: {medals.MEDAL_NUMBER}</td>
+			<td style="width:120px; white-space: nowrap; text-align: left; vertical-align: middle;">{L_ACP_USER_NOMINATED}: {medals.MEDAL_NOMINATED}</td>
+			<td style="width:90px; white-space: nowrap; text-align: right; vertical-align: middle;">
+				<!-- IF medals.S_FIRST_ROW && not medals.S_LAST_ROW -->
+					{ICON_MOVE_UP_DISABLED}
+					<a href="{medals.U_MOVE_DOWN}">{ICON_MOVE_DOWN}</a>
+				<!-- ELSEIF not medals.S_FIRST_ROW && not medals.S_LAST_ROW-->
+					<a href="{medals.U_MOVE_UP}">{ICON_MOVE_UP}</a> 
+					<a href="{medals.U_MOVE_DOWN}">{ICON_MOVE_DOWN}</a> 
+				<!-- ELSEIF medals.S_LAST_ROW && not medals.S_FIRST_ROW -->
+					<a href="{medals.U_MOVE_UP}">{ICON_MOVE_UP}</a>	
+					{ICON_MOVE_DOWN_DISABLED}
+				<!-- ELSE -->
+					{ICON_MOVE_UP_DISABLED}
+					{ICON_MOVE_DOWN_DISABLED}
+				<!-- ENDIF -->
+				<a href="{medals.U_EDIT}">{ICON_EDIT}</a> 
+				<a href="{medals.U_DELETE}">{ICON_DELETE}</a>
+			</td>
+		</tr>
+	<!-- END medals -->
+<!-- ELSE -->
+<table cellspacing="1">
+	<col class="row1" /><col class="row1" /><col class="row2" />
+<tbody>
+	<tr>
+		<td class="row3" colspan="3"><a href="{U_MEDALS_INDEX}">{L_ACP_MEDALS_MGT_INDEX}</a> -&gt; {CAT_TITLE}</td>
+	</tr>
+	<tr>
+		<td style="width: 5%; text-align: center;"><img src="images/file_conflict.gif" alt="{L_CAT}" /></td>
+		<td>{L_ACP_NO_MEDALS}</td>
+		<td style="width:90px; white-space: nowrap; text-align: right; vertical-align: middle;">
+			{ICON_MOVE_UP_DISABLED}
+			{ICON_MOVE_DOWN_DISABLED}
+			{ICON_EDIT_DISABLED}
+			{ICON_DELETE_DISABLED}
+		</td>
+	</tr>
+<!-- ENDIF -->
+</tbody>
+</table>
+<div class="clearfix">&nbsp;</div>
+<form id="module" method="post">
+
+<fieldset class="quick" style="float: left;">
+	<input type="text" name="medal_name" maxlength="30" /> 
+	<input class="button2" name="addmedal" type="submit" value="{L_ACP_CREATE_MEDAL}" />
+</fieldset>
+
+</form>
+<!-- INCLUDE overall_footer.html -->
