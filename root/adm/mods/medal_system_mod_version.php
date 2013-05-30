@@ -23,11 +23,11 @@ class medal_system_mod_version
 	{
 		global $config;
 		return array(
-			'author'	=> 'oddfish',
+			'author'	=> 'Jessica',
 			'title'		=> 'Medal System Mod for phpbb3',
 			'tag'		=> 'mod_version_check',
 			'version'	=> '0.21.0',
-			'file'		=> array('www.oddfish.co', 'mods', 'medals.xml'),
+			'file'		=> array('http://chenschool.elementfx.com/phpBB3.index.php', 'mods', 'medals.xml'),
 		);
 	}
 }
