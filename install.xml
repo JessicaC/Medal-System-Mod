@@ -149,6 +149,19 @@ Thanks to Gremlinn for doing the hard yards.]]></author-notes>
 ]]></action>
 			</edit>
 		</open>
+		<open src="viewonline.php">
+			<edit>
+				<find><![CDATA[      case 'faq':
+         $location = $user->lang['VIEWING_FAQ'];
+         $location_url = append_sid("{$phpbb_root_path}faq.$phpEx");
+      break;]]></find>
+				<action type="after-add"><![CDATA[      case 'medals':
+          $user->add_lang('mods/info_medals_mod');      
+         $location = $user->lang['MEDALS_VIEW_EXPLAIN'];
+         $location_url = append_sid("{$phpbb_root_path}medals.$phpEx");
+      break;   ]]></action>
+ 			</edit>
+ 		</open>
 		<open src="viewtopic.php">
 			<edit>
 				<comment lang="en"><![CDATA[medals count and nominations]]></comment>
