@@ -157,7 +157,7 @@ Thanks to Gremlinn for doing the hard yards.]]></author-notes>
       break;]]></find>
 				<action type="after-add"><![CDATA[      case 'medals':
           $user->add_lang('mods/info_medals_mod');      
-         $location = $user->lang['MEDALS_VIEW_EXPLAIN'];
+         $location = $user->lang['MEDALS_VIEW_ONLINE'];
          $location_url = append_sid("{$phpbb_root_path}medals.$phpEx");
       break;   ]]></action>
  			</edit>
