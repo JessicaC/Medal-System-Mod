@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+m<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
 <?xml-stylesheet type="text/xsl" href="modx.prosilver.en.xsl"?>
 <!--For security purposes, please check: http
 ://www.phpbb.com/mods/ for the latest version of this MOD. Although MODs are checked before being allowed in the MODs Database there is no guarantee that there are no security problems within the MOD. No support will be given for MODs not found within the MODs Database which can be found at http://www.phpbb.com/mods/-->
@@ -93,7 +93,7 @@ Thanks to Gremlinn for doing the hard yards.]]></author-notes>
 				<date>2009-11-16</date>
 				<rev-version>0.11.0 Beta</rev-version>
 				<changelog lang="en">
-					<change>CODE CLEANUP: viewtopic.php</change>
+					<change>CODE CLEANmUP: viewtopic.php</change>
 					<change>CODE CLEANUP: Medals_System_MOD.xml</change>
 					<change>CODE CLEANUP: includes/acp/info/acp_medals.php</change>
 					<change>CODE CLEANUP: includes/acp/acp_medals.php</change>
@@ -137,14 +137,14 @@ Thanks to Gremlinn for doing the hard yards.]]></author-notes>
 			<edit>
 				<find><![CDATA[			'S_ZEBRA'			=> ]]></find>
 				<action type="before-add"><![CDATA[// Medals System MOD
-			'USER_ID'				=> $user_id,
-			'U_NOMINATE'			=> ( $s_nominate ) ? append_sid("{$phpbb_root_path}medals.$phpEx", "m=nominate&amp;u={$user_id}") : '',
-			'U_CAN_AWARD_MEDALS'	=> ($auth->acl_get('a_user') || $is_mod ) ? append_sid("{$phpbb_root_path}medals.$phpEx", "m=award&amp;u={$user_id}") : '',
-			'L_USER_MEDAL'			=> $user->lang['MEDALS'],
-			'USER_MEDAL_COUNT'		=> $medal_count,
-			'L_MEDAL_INFORMATION'	=> $user->lang['MEDAL_INFORMATION'],
-			'L_MEDAL_NAME'			=> $user->lang['MEDAL'],
-			'L_MEDAL_DETAIL'		=> $user->lang['MEDAL_DETAIL'],
+         'USER_ID'            => $user_id,
+         'U_NOMINATE'         => ( $config['medals_active'] == 1) ? (( $s_nominate ) ? append_sid("{$phpbb_root_path}medals.$phpEx", "m=nominate&amp;u={$user_id}") : '') : '',
+         'U_CAN_AWARD_MEDALS'   => ( $auth->acl_get('a_user') || $is_mod ) ? append_sid("{$phpbb_root_path}medals.$phpEx", "m=award&amp;u={$user_id}") : '',
+         'L_USER_MEDAL'         => ( $config['medals_active'] == 1) ? $user->lang['MEDALS'] : '',
+         'USER_MEDAL_COUNT'      => ( $config['medals_active'] == 1) ? $medal_count : '',
+         'L_MEDAL_INFORMATION'   => ( $config['medals_active'] == 1) ? $user->lang['MEDAL_INFORMATION'] : '',
+         'L_MEDAL_NAME'         => ( $config['medals_active'] == 1) ? $user->lang['MEDAL'] : '',
+         'L_MEDAL_DETAIL'      => ( $config['medals_active'] == 1) ? $user->lang['MEDAL_DETAIL'] : '',
 // ----------------------------
 ]]></action>
 			</edit>
