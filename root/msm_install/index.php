@@ -90,11 +90,6 @@ $versions = array(
 			array('ROLE_ADMIN_FULL', 'a_manage_medals'),
 		),
 
-		// Lets add a new column to phpbb_users
-		'table_column_add' => array(
-			array('phpbb_users', 'user_points', array('INT:11', '0')),
-		),
-
 		// Now to add a table (this uses the layout from develop/create_schema_files.php and from phpbb_db_tools)
 		'table_add' => array(
 			array('phpbb_medals', array(
