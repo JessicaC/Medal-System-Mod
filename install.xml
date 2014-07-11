@@ -234,7 +234,7 @@ define('MEDALS_CATS_TABLE',			$table_prefix . 'medals_cats');
 			<edit>
 				<comment lang="en"><![CDATA[html viewprofile medals]]></comment>
 				<find><![CDATA[			<dt>{L_TOTAL_POSTS}:</dt>]]></find>
-				<action type="before-add"><![CDATA[			<dt>{L_MEDALS_VIEW}:</dt> <dd>{USER_MEDAL_COUNT} <!-- IF U_CAN_AWARD_MEDALS -->| <a href="{U_CAN_AWARD_MEDALS}"><strong>{L_AWARD_MEDAL}</strong></a><!-- ENDIF --><!-- IF U_NOMINATE --> | <a href="{U_NOMINATE}"><strong>{L_NOMINATE}</strong></a><!-- ENDIF --></dd>]]></action>
+				<action type="before-add"><![CDATA[			<!-- IF U_MEDALS --><dt>{L_MEDALS_VIEW}:</dt> <dd>{USER_MEDAL_COUNT} <!-- IF U_CAN_AWARD_MEDALS -->| <a href="{U_CAN_AWARD_MEDALS}"><strong>{L_AWARD_MEDAL}</strong></a><!-- ENDIF --><!-- IF U_NOMINATE --> | <a href="{U_NOMINATE}"><strong>{L_NOMINATE}</strong></a><!-- ENDIF --><!-- ENDIF --></dd>]]></action>
 			</edit>
 			<edit>
 				<find><![CDATA[<!-- INCLUDE jumpbox.html -->]]></find>
