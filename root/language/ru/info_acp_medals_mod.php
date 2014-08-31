@@ -38,7 +38,7 @@ $lang = array_merge($lang, array(
 	'ACP_MEDALS_INDEX'				=> 'Награды',
 	'ACP_MEDALS_INDEX_EXPLAIN'		=> 'Награды на Вашем ресурсе',
 	'ACP_MEDALS_TITLE'				=> 'Управление наградами',
-	'ACP_MEDALS_SETTINGS'			=> 'Настройки',
+	'ACP_MEDALS_SETTINGS'			=> 'Конфигурация наград',
 
 	'MEDALS_MOD_INSTALLED'			=> 'Мод наград (Medals MOD) версии %s установлен',
 	'MEDALS_MOD_UPDATED'			=> 'Мод наград (Medals MOD) обновлен до версии %s',
