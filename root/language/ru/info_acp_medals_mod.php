@@ -42,7 +42,7 @@ $lang = array_merge($lang, array(
 
 	'MEDALS_MOD_INSTALLED'			=> 'Мод наград (Medals MOD) версии %s установлен',
 	'MEDALS_MOD_UPDATED'			=> 'Мод наград (Medals MOD) обновлен до версии %s',
-	'MEDALS_MOD_MANUAL'				=> 'У вас установлена слишком старая версия мода наград (Medals MOD).<br />Вам нужно сначала удалить установленную версию.<br />Но перед этим убедителсь, что вы сделали полный бекап.',
+	'MEDALS_MOD_MANUAL'				=> 'У вас установлена слишком старая версия мода наград (Medals MOD).<br />Вам нужно сначала удалить установленную версию.<br />Но перед этим убедитесь, что вы сделали полный бекап.',
 
 	'acl_u_award_medals'			=>  array('lang' => 'Может выдавать награды', 'cat' => 'misc'),
 	'acl_u_nominate_medals'			=>  array('lang' => 'Может номинировать на выдачу наград', 'cat' => 'misc'),
@@ -82,7 +82,7 @@ $lang = array_merge($lang, array(
 	'ACP_NUMBER'						=> 'Количество награждений данной медалью',
 	'ACP_NUMBER_EXPLAIN'				=> 'Определяет, сколько раз эта награда может быть вручена на форуме.',
 	'ACP_POINTS'						=> 'Баллы',
-	'ACP_POINTS_EXPLAIN'				=> 'Определяет, как начисляются (или расходаются) баллы при получении этой награды.<br />Используется для сомсестной работы с Simple Points Mod.',
+	'ACP_POINTS_EXPLAIN'				=> 'Определяет, как начисляются (или расходуются) баллы при получении этой награды.<br />Используется для совместной работы с Simple Points Mod.',
 
 	'ACP_MEDALS_MGT_INDEX'				=> 'Категории наград',
 	'ACP_MEDAL_TITLE_CAT'				=> 'Редактирование категории',
@@ -90,9 +90,9 @@ $lang = array_merge($lang, array(
 	'ACP_MEDAL_LEGEND_CAT'				=> 'Категория',
 	'ACP_NAME_TITLE_CAT'				=> 'Имя категории',
 	'ACP_CREATE_CAT'					=> 'Создать категорию',
-	'ACP_CAT_ADD_FAIL'					=> 'Не указано имя категории для добавления.<br /><br /> Нажмите <a href="%s">здесь</a> для возврата к списоку категорий.',
-	'ACP_CAT_ADD_GOOD'					=> 'Категория успешно добавлена.<br /><br /> Нажмите <a href="%s">здесь</a> для возврата к списоку категорий.',
-	'ACP_CAT_EDIT_GOOD'					=> 'Категория успешно обновлена.<br /><br /> Нажмите <a href="%s">здесь</a> для возврата к списоку категорий.',
+	'ACP_CAT_ADD_FAIL'					=> 'Не указано имя категории для добавления.<br /><br /> Нажмите <a href="%s">здесь</a> для возврата к списку категорий.',
+	'ACP_CAT_ADD_GOOD'					=> 'Категория успешно добавлена.<br /><br /> Нажмите <a href="%s">здесь</a> для возврата к списку категорий.',
+	'ACP_CAT_EDIT_GOOD'					=> 'Категория успешно обновлена.<br /><br /> Нажмите <a href="%s">здесь</a> для возврата к списку категорий.',
 	'ACP_CAT_DELETE_CONFIRM'			=> 'В какую категорию перенести медали после удаления этой категории? <br /><form method="post"><fieldset class="submit-buttons"><select name="newcat">%s</select><br /><br /><input class="button1" type="submit" name="moveall" value="Move All Medals" />&nbsp;<input class="button2" type="submit" name="deleteall" value="Delete All Medals" />&nbsp;<input type="submit" class="button2" name="cancelcat" value="Cancel Deletion" /></fieldset></form>',
 	'ACP_CAT_DELETE_CONFIRM_ELSE'		=> 'Отсутствуют категории для перемещения наград.<br />Вы уверены, что хотите удалить эту категорию и все содержащиеся в ней награды?<br /><form method="post"><fieldset class="submit-buttons"><br /><input class="button2" type="submit" name="deleteall" value="Yes" />&nbsp;<input type="submit" class="button2" name="cancelcat" value="No" /></fieldset></form>',
 	'ACP_CAT_DELETE_GOOD'				=> 'Эта категория, все содержащиеся в ней награды и информация о вручениях этих наград успешно удалены.<br /><br /> Нажмите <a href="%s">здесь</a> для возврата к списку категорий.',
@@ -101,7 +101,7 @@ $lang = array_merge($lang, array(
 	'ACP_NO_CAT_ID'						=> 'Нет категорий',
 
 // Medals Configuration
-	'ACP_CONFIG_TITLE'					=> 'Основные парметры',
+	'ACP_CONFIG_TITLE'					=> 'Основные параметры',
 	'ACP_CONFIG_DESC'					=> 'Здесь вы можете установить основные параметры наград',
 	'ACP_MEDALS_CONF_SETTINGS'			=> 'Настройки конфигурации наград',
 	'ACP_MEDALS_CONF_SAVED'				=> 'Настройки наград сохранены<br /><br /> Нажмите <a href="%s">здесь</a> для возврата на страницу настроек',
